@@ -40,25 +40,22 @@ public class Main {
 
         // escribir el archivo "unaCarrera.txt" con el nombre de la carrera indicada
         String carreraIndicada = "Psicología";
-
-        Nodo<Carrera> nodoActual = listaCarreras.getPrimero();
         List<String> salida = new ArrayList<>();
         salida.add(carreraIndicada);
 
-        while (nodoActual != null)
-            System.out.println(nodoActual.getDato().getNombreCarrera());
-        if (nodoActual.getDato().getNombreCarrera().trim().compareTo(carreraIndicada) == 0) {
-            Lista<Alumno> listaAlumnos = nodoActual.getDato().getIndiceCarrera().inorden();
-            Nodo<Alumno> alumno = listaAlumnos.getPrimero();
-            while (alumno != null) {
-                salida.add(alumno.getDato().getCodigo() + "," + alumno.getDato().getApellido());
-                alumno = alumno.getSiguiente();
+        Nodo<Carrera> nodoActual = listaCarreras.getPrimero();
+        while (nodoActual != null) {
+            if (nodoActual.getDato().getNombreCarrera().trim().compareTo(carreraIndicada) == 0) {
+                Lista<Alumno> listaAlumnos = nodoActual.getDato().getIndiceCarrera().inorden();
+                Nodo<Alumno> alumno = listaAlumnos.getPrimero();
+                while (alumno != null) {
+                    salida.add(alumno.getDato().getCodigo() + "," + alumno.getDato().getApellido());
+                    alumno = alumno.getSiguiente();
+                }
             }
+            nodoActual = nodoActual.getSiguiente();
         }
-        nodoActual = nodoActual.getSiguiente();
-
-        String[] salidas = salida.toArray(new String[0]);
-        ManejadorArchivosGenerico.escribirArchivo("unacarrera.txt", salidas);
+        ManejadorArchivosGenerico.escribirArchivo(carreraIndicada + ".txt", salida.toArray(new String[0]));
 
         // escribir el archivo "todasCarreras.txt"
         Nodo<Carrera> primero = listaCarreras.getPrimero();
